@@ -1,20 +1,14 @@
 // SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.9;
 
-import "./CreditOracle.sol";
 import "./Xscrow.sol";
+import "./CreditOracle.sol";
+import "./structures/XscrowProduct.sol";
 
 contract XscrowFactory {
     address private _linkTokenAddress;
     address private _operator;
     bytes32 private _jobId;
-
-
-    struct XscrowProduct {
-        address xscrow;
-        address oracle;
-        uint256 timestamp;
-    }
 
     event Deployed(address indexed owner, uint id, XscrowProduct xscrowProduct_);
 
@@ -32,11 +26,13 @@ contract XscrowFactory {
         address lenderTreasury_,
         address vendorTreasury_,
         string memory apiUrl_
-    ) public returns (bool) {
+    ) public {
         CreditOracle oracle = new CreditOracle(_linkTokenAddress, _operator, _jobId, apiUrl_);
         Xscrow xscrow = new Xscrow(tokenAddress_, lenderTreasury_, vendorTreasury_, identifier_, address(oracle));
 
         oracle.updateXscrow(address(xscrow));
+        oracle.transferOwnership(msg.sender);
+        xscrow.transferOwnership(msg.sender);
 
         XscrowProduct[] storage xscrowProducts = _xscrowProducts[msg.sender];
         xscrowProducts.push(
@@ -47,8 +43,8 @@ contract XscrowFactory {
          )
         );
         uint256 id =  xscrowProducts.length - 1;
+
         emit Deployed(msg.sender, id, _xscrowProducts[msg.sender][id]);
-        return true;
     }
 
     function xscrowProduct(address owner_, uint index_) view public returns (XscrowProduct memory) {

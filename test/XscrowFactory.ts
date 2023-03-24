@@ -64,4 +64,30 @@ describe('XscrowFactory', () => {
       );
     });
   });
+
+  it('ownership', async () => {
+    await new Promise(async (resolve, reject) => {
+      const filter = xscrowFactory.filters.Deployed(wallet1.address);
+      xscrowFactory.once(filter, async (owner_: any, id_: any, product: any) => {
+        try {
+          const xscrowContract = (await ethers.getContractFactory('Xscrow')).attach(product.xscrow);
+          const oracleContract = (await ethers.getContractFactory('CreditOracle')).attach(product.oracle);
+          expect(owner_).to.equal(wallet1.address);
+          expect(await xscrowContract.owner()).to.equal(wallet1.address);
+          expect(await oracleContract.owner()).to.equal(wallet1.address);
+          resolve(true);
+        } catch (error) {
+          reject(false);
+        }
+      });
+
+      await xscrowFactory.connect(wallet1).create(
+        'aXscrowName',
+        fakeToken.address,
+        lenderTreasury.address,
+        vendorTreasury.address,
+        'https://anApiUrl.com?address='
+      );
+    });
+  });
 });

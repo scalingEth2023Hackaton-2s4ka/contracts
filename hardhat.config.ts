@@ -14,10 +14,10 @@ const config: HardhatUserConfig = {
     ]
   },
   networks: {
-    goerli: {
+    sepolia: {
       url: API_URL,
       accounts: [`0x${PRIVATE_KEY}`],
-      gasPrice: 80000000000
+      gasPrice: 1200000000
     }
   }
 };
