@@ -77,7 +77,6 @@ describe('XscrowFactory', () => {
           expect(await oracleContract.owner()).to.equal(wallet1.address);
           resolve(true);
         } catch (error) {
-          console.log(error);
           reject(false);
         }
       });
