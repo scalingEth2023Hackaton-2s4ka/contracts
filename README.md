@@ -10,8 +10,25 @@ cd contracts
 
 Ensure you have [Node](https://nodejs.org/), then install and start the app:
 
-npm install
-npm start
+`npm install`
+
+### Run tests
+`npx hardhat test`
+
+### Deploy
+
+Create a .env file with your private key and an RPC url
+
+```dotenv
+API_URL=
+PRIVATE_KEY=
+```
+
+Add your network in `hardhat.config.ts` or use sepolia.
+
+Deploy contracts:
+
+`npx hardhat run scripts/deploy.ts --network sepolia`
 
 
 ## Links
