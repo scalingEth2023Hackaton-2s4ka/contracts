@@ -33,6 +33,5 @@ Deploy contracts:
 
 ## Links
 * [dApp](https://github.com/scalingEth2023Hackaton-2s4ka/dApp)
-* [+Documentation](https://github.com/scalingEth2023Hackaton-2s4ka/contracts/tree/develop/doc)
-* [Full video]() 
-* [Full video demo]() 
+* [Video demo](https://drive.google.com/file/d/1xR_RCsY2nGsUB-nOka3qir7naUhTqeJ_/view?usp=share_link)
+* [Full video demo](https://drive.google.com/file/d/1xR_RCsY2nGsUB-nOka3qir7naUhTqeJ_/view?usp=share_link)
